@@ -31,4 +31,11 @@ def index():
 
         # Resize and save the original image
         original_image = Image.open(os.path.join(app.config['EXISTING_FILE'], 'image.jpg')).resize(250,160)
-        original_image.save(os.path.join)
+        original_image.save(os.path.join(app.config['EXISTING_FILE'], 'image.jpg'))
+
+        # Read uploaded and original image as array
+        original_image = cv2.imread(os.path.join(app.config['EXISTING_FILE'], 'image.jpg'))
+        uploaded_image = cv2.imread(os.path.join(app.config['INITIAL_FILE_UPLOADS', 'image.jpg']))
+
+        # Convert Image 
+        original_gray = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)

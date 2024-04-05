@@ -49,3 +49,20 @@ def index():
         thresh = cv2.threshold(diff, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
         contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         contours = imutils.grab_contours(contours)
+
+        # draw contours on image
+        for c in contours:
+        # applying contours on image
+            (x, y, w, h) = cv2.boundingRect(c)
+            cv2.rectangle(original_image, (x,y), (x + w, y + h), (0, 0, 255), 2)
+            cv2.rectangle(uploaded_image, (x,y), (x + w, y + h), (0, 0, 255), 2)
+
+        # save all output images
+        cv2.imwrite(os.path.join(app.config['GENERATE_FILE'], 'image_original.jpg'), original_image)
+        cv2.imwrite(os.path.join(app.config['GENERATE_FILE'], 'image_uploaded.jpg'), uploaded_image)
+        cv2.imwrite(os.path.join(app.config['GENERATE_FILE'], 'image_diff.jpg'), diff)
+        cv2.imwrite(os.path.join(app.config['GENERATE_FILE'], 'image_thresh.jpg'), thresh)
+
+# Main Function
+if __name__ == '__main__':
+    app.run(debug=True)
